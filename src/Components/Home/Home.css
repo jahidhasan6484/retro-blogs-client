@@ -1,0 +1,11 @@
+.home {
+    margin-top: 10rem;
+    padding: 0 2%;
+}
+.sidebar {
+    top: 100;
+    position: sticky;
+}
+/* .p-5 > img {
+    height: 500px;
+} */

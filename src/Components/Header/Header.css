@@ -1,7 +1,7 @@
 .header{
     font-family: "Sacramento", cursive;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid rgb(230, 227, 227);
+    padding: 1rem 1rem;
+    border-bottom: 1px solid rgb(206, 206, 206);
   }
   .logo {
     font-size: 2rem;
@@ -21,17 +21,22 @@
   }
   .socials > a > img {
     cursor: pointer;
-    width: 20px;
+    width: 1.5rem;
   }
   .hamburger {
     cursor: pointer;
-    width: 30px;
+    width: 1rem;
   }
+
   .header2 {
-      margin-top: 5rem;
+    font-family: "Sacramento", cursive;
+    margin-top: 5.04rem;
+    /* background-color: #f0f2f5; */
+  }
+  .nav{
+    border-radius: 10px;
   }
   .nav > li {
-    font-family: "Sacramento", cursive;
       font-size: 1.25rem;
       font-weight: 400;
       cursor: pointer;

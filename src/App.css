@@ -1,0 +1,56 @@
+/* * {
+  background-color: #f0f2f5;
+} */
+.button{
+    border: 1px solid black;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-weight: 700;
+    margin: 5px;
+    transition: 0.5s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+  .signIn, .register{
+    color: black;
+  }
+  .register{
+    color: #fff;
+  }
+  .signIn:hover{
+    color: #fff;
+  }
+  .register:hover{
+    color: black;
+  }
+  .button::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: black;
+    z-index: -1;
+    transition: 0.8s;
+  }
+  .signIn::before,.register::before{
+    top: 0;
+    border-radius: 0 0 50% 50%;
+  }
+  .register::before{
+    height: 180%;
+  }
+  .signIn:hover::before{
+    height: 180%;
+  }
+  .register:hover::before{
+    height: 0%;
+  }
+
+  body::-webkit-scrollbar {
+    width: 0.25rem;
+  }
