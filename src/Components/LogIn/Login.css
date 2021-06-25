@@ -1,0 +1,22 @@
+.login {
+  background-color: #f0f2f5;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Sacramento", cursive;
+}
+span {
+  cursor: pointer;
+  color: blue;
+  transition: all 0.3s ease;
+}
+span:hover {
+  letter-spacing: 2px;
+}
+.greetings {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+}

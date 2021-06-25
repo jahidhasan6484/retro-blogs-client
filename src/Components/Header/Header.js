@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from "../../App";
 import './Header.css';
 import { Link } from "react-router-dom";
 import Hamburger from '../../img/nav/filter-right.svg'
 import { Modal } from 'react-bootstrap';
 
 const Header = () => {
+    const [user, setUser] = useContext(UserContext);
+
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/isAdmin", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ email: user.email }),
+        })
+            .then((res) => res.json())
+            .then((data) => setIsAdmin(data));
+    }, []);
 
     const [show, setShow] = useState(false);
 
@@ -55,7 +69,7 @@ const Header = () => {
                     <Link to="/" className="logo">Retro</Link>
                     <div className="d-flex ms-auto">
                         <div className="d-flex align-items-center">
-                            <Link to="/profile" className="button">Jahid Hasan Juyel</Link>
+                            <Link to="/profile" className="button">{user.name || user.email}</Link>
                         </div>
                     </div>
                     <button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,9 +81,12 @@ const Header = () => {
                 <div className="collapse navbar-collapse totalNav" id="navbarSupportedContent">
                     <div className="nav-scroller py-1 mb-2 m-auto">
                         <nav className="nav d-flex justify-content-between">
-                            <Link to="/home"className="ps-5">All Blogs</Link>
-                            <Link className="ps-5" onClick={handleShow}>Create a Blog</Link>
+                            <Link to="/home" className="ps-5">All Blogs</Link>
+                            {
+                                isAdmin && <Link className="ps-5" onClick={handleShow}>Create a Blog</Link>
 
+                            }
+                            
                         </nav>
                     </div>
                 </div>

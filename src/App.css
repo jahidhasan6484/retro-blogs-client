@@ -1,29 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
 
-.button{
-    border: 1px solid black;
-    border-radius: 5px;
-    background: none;
-    padding: 5px 10px;
-    font-size: 10px;
-    font-weight: 700;
-    margin: 5px;
-    transition: 0.5s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-    color: #000;
-    text-decoration: none;
-  }
-  .button:hover {
-    color: #000;
-    text-decoration: none;
-  }
-  .date {
-    text-transform: uppercase;
+.button {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: none;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  margin: 5px;
+  transition: 0.5s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  color: #000;
+  text-decoration: none;
+}
+.button:hover {
+  color: #000;
+  text-decoration: none;
+}
+.date {
+  text-transform: uppercase;
+}
+.loading{
+  font-family: "Sacramento", cursive;
+  font-size: 1.5rem;
+  margin-top: 20rem;
+  letter-spacing: 2px;
 }
 
-  body::-webkit-scrollbar {
-    width: 0.25rem;
-  }
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}

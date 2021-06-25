@@ -1,37 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from "../../App";
 import './Home.css';
 import { Link } from "react-router-dom";
+import Delete from '../../img/details/trash.png';
 
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const [user, setUser] = useContext(UserContext);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/isAdmin", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ email: user.email }),
+        })
+            .then((res) => res.json())
+            .then((data) => setIsAdmin(data));
+    }, []);
 
     useEffect(() => {
         fetch('http://localhost:5000/blogs')
             .then(res => res.json())
             .then(data => {
                 setBlogs(data);
+                setLoading(false);
             })
     }, [])
 
+    const handleDelete = (id) => {
+        fetch(`http://localhost:5000/delete/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result) {
+                    const remainBlogs = blogs.filter(blog => blog._id !== id);
+                    setBlogs(remainBlogs);
+                }
+            });
+    };
+
     return (
         <>
-            <div className="row mb-2 home">
-                {
-                    blogs.map((blog) => {
-                        const { _id, image, title, date } = blog;
+            {
+                loading ? <div className="loading">
+                    <p className="text-center">Loading...</p>
+                </div> :
+                    <div className="row mb-2 home">
+                        {
+                            blogs.map((blog) => {
+                                const { _id, image, title, date } = blog;
 
-                        return (
-                                <div className="col-md-4 blog" key={_id}>
-                                    <Link to={`/details/${_id}`}>
-                                        <img src={`data:image/png;base64,${image?.img}`} className="img-fluid" alt={title}></img>
-                                        <h5 className="mt-3 homeTitle">{title}</h5>
-                                    </Link>
-                                    <p className="mt-2 text-muted date">{date}</p>
-                                </div>
-                        )
-                    })
-                }
-            </div>
+                                return (
+                                    <div className="col-md-4 blog" key={_id}>
+                                        <Link to={`/details/${_id}`}>
+                                            <img src={`data:image/png;base64,${image?.img}`} className="img-fluid" alt={title}></img>
+                                            <h5 className="mt-3 homeTitle">{title}</h5>
+                                        </Link>
+                                        <div className="d-flex blogFooter">
+                                            <p className="mt-2 text-muted date">{date}</p>
+                                            {
+                                                isAdmin && <img src={Delete} onClick={() => handleDelete(_id)} alt="Delete"></img>
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+            }
+
+
         </>
     );
 };

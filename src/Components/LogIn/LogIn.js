@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import "./Login.css";
+import { UserContext } from "../../App";
 import firebase from "firebase/app";
 import "firebase/auth";
-import firebaseConfig from "../firebase.config"
+import firebaseConfig from "../firebase.config";
 
 
 if (!firebase.apps.length) {
@@ -9,35 +11,8 @@ if (!firebase.apps.length) {
 }
 
 const LogIn = () => {
+    const [user, setUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
-    const [user, setUser] = useState({
-        isSignedIn: false,
-        name: '',
-        email: '',
-        password: '',
-        photo: ''
-    })
-
-    const handleSignOut = () => {
-        firebase.auth()
-            .signOut()
-            .then(res => {
-                const signOutUser = {
-                    isSignedIn: false,
-                    name: '',
-                    email: '',
-                    photo: '',
-                    error: '',
-                    success: false
-                }
-                setUser(signOutUser);
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-                console.log(err.message);
-            })
-    }
 
     const handleBlur = (e) => {
         let isFieldValid = true;
@@ -107,36 +82,41 @@ const LogIn = () => {
             console.log(error);
         });
     }
+
+    const userSignIn = () => {
+        const newInfo = { ...user }
+        newInfo.isSignedIn = true;
+        setUser(newInfo);
+    }
     return (
-        <div>
-            {
-                user.isSignedIn && <div>
-                    <p>Welcome, {user.name}</p>
-                    <p>Your email: {user.email}</p>
-                    <img src={user.photo} alt="" srcset="" />
+        <div className="login">
+            <div className="container row">
+                <div className="col-md-6">
+                    <div className="greetings">
+                        <h1>Welcome to Retro Blogs</h1>
+                        <p>Log In or Sign Up to explore !</p>
+                    </div>
                 </div>
-            }
-
-            <h1>Our own Authentication System</h1>
-
-            <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id="" />
-            <lable htmlFor="newUser">New user? Sign Up</lable>
-
-            <form onSubmit={handleSubmit}>
-                {newUser && <input type="text" name="name" onBlur={handleBlur} placeholder="Your name" />}
-                <br /><br />
-                <input type="text" name="email" onBlur={handleBlur} placeholder="Enter your email address" required></input>
-                <br /><br />
-                <input type="password" name="password" onBlur={handleBlur} placeholder="Your password" required></input>
-                <br /><br />
-                <input type="submit" value={newUser ? "Sign Up" : "Sign In"} />
-            </form>
-
-            <p style={{ color: "red" }}>{user.error}</p>
-            {
-                user.success && <p style={{ color: "green" }}>User {newUser ? 'created' : 'logged in'} successfully</p>
-            }
-
+                <div className="col-md-6">
+                    <form onSubmit={handleSubmit}>
+                        <h2 className="mb-3">{newUser ? "Sign Up" : "Log In"}</h2>
+                        {newUser && <input type="text" name="name" onBlur={handleBlur} placeholder="Your name" required className="form-control" />}
+                        <input type="text" name="email" onBlur={handleBlur} placeholder="Enter your email address" required className="mt-2 form-control"></input>
+                        <input type="password" name="password" onBlur={handleBlur} placeholder="Your password" required className="mt-2 form-control"></input>
+                        <input type="submit" className="mt-3 button" value={newUser ? "Sign Up" : "Sign In"} />
+                        {
+                            newUser ? <p className="mt-3">Already have an account? <span onClick={() => setNewUser(!newUser)}>Login</span></p> : <p className="mt-3">Don't have an account? <span onClick={() => setNewUser(!newUser)}>Sign Up</span></p>
+                        }
+                    </form>
+                    <p style={{ color: "red" }}>{user.error}</p>
+                    {
+                        user.success && <p style={{ color: "green" }}>User {newUser ? 'created' : 'logged in'} successfully</p>
+                    }
+                    {
+                        user.success && userSignIn()
+                    }
+                </div>
+            </div>
         </div>
     );
 };
