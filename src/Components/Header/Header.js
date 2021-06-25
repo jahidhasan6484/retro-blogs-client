@@ -1,33 +1,61 @@
 import React, { useState } from 'react';
 import './Header.css';
-
 import { Link } from "react-router-dom";
-import Facebook from '../../img/socials/facebook.png';
-import Instagram from '../../img/socials/instagram.png';
 import Hamburger from '../../img/nav/filter-right.svg'
-import AddUser from '../../img/nav/addUser.png';
-import AddUser1 from '../../img/nav/addUser1.png';
-import SignIn from '../../img/nav/signIn.png';
-import SignIn1 from '../../img/nav/signIn1.png';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 const Header = () => {
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // const [admin, setAdmin] = useState(false);
+
+
+    const [info, setInfo] = useState({});
+    const [file, setFile] = useState(null);
+
+    const handleBlur = (e) => {
+        const newInfo = { ...info };
+        newInfo[e.target.name] = e.target.value;
+        setInfo(newInfo);
+    };
+
+    const handleFileChange = (e) => {
+        const newFile = e.target.files[0];
+        setFile(newFile);
+    };
+
+    const handleSubmit = () => {
+        const formData = new FormData();
+        console.log(info);
+        formData.append("file", file);
+        formData.append("title", info.title);
+        formData.append("content", info.content);
+        formData.append("date", new Date().toDateString());
+
+        fetch("http://localhost:5000/addABlog", {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light header fixed-top">
                 <div className="container-fluid">
                     <Link to="/" className="logo">Retro</Link>
                     <div className="d-flex ms-auto">
-                        <div className="d-flex align-items-center socials">
-                            <Link to="/"><img className="social img-fluid" src={AddUser} alt="Facebook"></img></Link>
-                            <Link to="/"><img className="social img-fluid" src={SignIn} alt="Facebook"></img></Link>
-
+                        <div className="d-flex align-items-center">
+                            <Link to="/profile" className="button">Jahid Hasan Juyel</Link>
                         </div>
                     </div>
                     <button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +67,8 @@ const Header = () => {
                 <div className="collapse navbar-collapse totalNav" id="navbarSupportedContent">
                     <div className="nav-scroller py-1 mb-2 m-auto">
                         <nav className="nav d-flex justify-content-between">
-
-                            <li className="ps-5">All Blogs</li>
-                            <li className="ps-5" onClick={handleShow}>Create a Blog</li>
+                            <Link to="/home"className="ps-5">All Blogs</Link>
+                            <Link className="ps-5" onClick={handleShow}>Create a Blog</Link>
 
                         </nav>
                     </div>
@@ -49,32 +76,23 @@ const Header = () => {
             </nav>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create a Blogs</Modal.Title>
+                    <Modal.Title>Create a Blog</Modal.Title>
                 </Modal.Header>
-                <form className="px-2 py-2">
-                    <div class="form-group">
-                        <label>Blog Title</label>
-                        <input type="text" class="form-control" name="title" />
+                <form className="modalForm">
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Title</label>
+                        <input onBlur={handleBlur} type="text" className="form-control" name="title" placeholder="Blog title" required />
                     </div>
-
-                    <div class="form-group">
-                        <label>Blog Content</label>
-                        <textarea class="form-control" name="content" rows="10"></textarea>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Content</label>
+                        <textarea onBlur={handleBlur} type="text" rows="10" className="form-control" name="content" placeholder="Write your content here..." required />
                     </div>
-
-                    <div class="form-group">
-                        <label for="exampleFormControlFile1">Add a cover image</label>
-                        <input type="file" class="form-control-file" name="image" />
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Upload a cover image</label>
+                        <input onChange={handleFileChange} type="file" className="form-control" id="exampleInputPassword1" required />
                     </div>
+                    <button type="submit" className="button" onClick={() => handleSubmit()}>Submit</button>
                 </form>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Post
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </>
     );

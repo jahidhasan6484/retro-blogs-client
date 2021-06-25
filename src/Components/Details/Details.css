@@ -1,0 +1,20 @@
+.details {
+    margin-top: 10rem;
+    padding: 5rem 5rem; 
+}
+
+.title {
+    font-size: 2.20rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.writer {
+    margin-top: 2rem;
+    font-weight: 500;
+}
+.col-md-8 > img {
+border-radius: 10px;
+}
+.content{
+    font-size: 1.10rem;
+}

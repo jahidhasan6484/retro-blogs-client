@@ -1,11 +1,27 @@
 .home {
-    margin-top: 10rem;
-    padding: 0 2%;
+  margin-top: 10rem;
+  padding: 0 20%;
+  font-family: "Ubuntu", sans-serif;
 }
-.sidebar {
-    top: 100;
-    position: sticky;
+.blog {
+  background-color: #fdfbfb;
+  border-radius: 10px;
 }
-/* .p-5 > img {
-    height: 500px;
-} */
+.blog > a > img {
+  margin: 1rem 0;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.blog > a > img:hover {
+  box-shadow: 0px 10px 30px rgba(71, 71, 75, 0.205);
+  transform: scale(1.05);
+}
+.blog > a > h5 {
+  color: #000;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+.blog > a:hover {
+  text-decoration: none;
+}
