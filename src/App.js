@@ -4,8 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import Details from "./Components/Details/Details";
@@ -24,28 +23,29 @@ function App() {
     photo: ''
   })
 
+
   return (
 
     <UserContext.Provider value={[user, setUser]}>
       {
-        !user.isSignedIn ? <LogIn />  : 
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/details/:id">
-              <Details />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-          </Switch>
-        </Router>
+        !user.isSignedIn ? <LogIn /> :
+          <Router>
+            <Header />
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/home">
+                <Home />
+              </Route>
+              <Route path="/details/:id">
+                <Details />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+            </Switch>
+          </Router>
       }
 
     </UserContext.Provider>

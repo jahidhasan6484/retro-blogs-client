@@ -88,6 +88,7 @@ const LogIn = () => {
         newInfo.isSignedIn = true;
         setUser(newInfo);
     }
+
     return (
         <div className="login">
             <div className="container row">

@@ -3,6 +3,8 @@ import { UserContext } from "../../App";
 import './Home.css';
 import { Link } from "react-router-dom";
 import Delete from '../../img/details/trash.png';
+import Zoom from 'react-reveal/Zoom';
+
 
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
@@ -49,28 +51,30 @@ const Home = () => {
                 loading ? <div className="loading">
                     <p className="text-center">Loading...</p>
                 </div> :
-                    <div className="row mb-2 home">
-                        {
-                            blogs.map((blog) => {
-                                const { _id, image, title, date } = blog;
+                    <Zoom>
+                        <div className="row mb-2 home">
+                            {
+                                blogs.map((blog) => {
+                                    const { _id, image, title, date } = blog;
 
-                                return (
-                                    <div className="col-md-4 blog" key={_id}>
-                                        <Link to={`/details/${_id}`}>
-                                            <img src={`data:image/png;base64,${image?.img}`} className="img-fluid" alt={title}></img>
-                                            <h5 className="mt-3 homeTitle">{title}</h5>
-                                        </Link>
-                                        <div className="d-flex blogFooter">
-                                            <p className="mt-2 text-muted date">{date}</p>
-                                            {
-                                                isAdmin && <img src={Delete} onClick={() => handleDelete(_id)} alt="Delete"></img>
-                                            }
+                                    return (
+                                        <div className="col-md-4 blog" key={_id}>
+                                            <Link to={`/details/${_id}`}>
+                                                <img src={`data:image/png;base64,${image?.img}`} className="img-fluid" alt={title}></img>
+                                                <h5 className="mt-3 homeTitle">{title}</h5>
+                                            </Link>
+                                            <div className="d-flex blogFooter">
+                                                <p className="mt-2 text-muted date">{date}</p>
+                                                {
+                                                    isAdmin && <img src={Delete} onClick={() => handleDelete(_id)} alt="Delete"></img>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </Zoom>
             }
 
 

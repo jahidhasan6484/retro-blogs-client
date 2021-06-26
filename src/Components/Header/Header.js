@@ -62,6 +62,7 @@ const Header = () => {
             });
     };
 
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light header fixed-top">
@@ -86,7 +87,7 @@ const Header = () => {
                                 isAdmin && <Link className="ps-5" onClick={handleShow}>Create a Blog</Link>
 
                             }
-                            
+
                         </nav>
                     </div>
                 </div>

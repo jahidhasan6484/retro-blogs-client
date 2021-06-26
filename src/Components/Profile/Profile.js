@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import './Profile.css';
 import { UserContext } from "../../App";
 import firebase from "firebase/app";
 import "firebase/auth";
-import firebaseConfig from "../firebase.config";
 
 const Profile = () => {
     const [user, setUser] = useContext(UserContext);
@@ -28,6 +27,7 @@ const Profile = () => {
                 console.log(err.message);
             })
     }
+
     return (
         <div className="login">
             <div className="container row">
@@ -36,7 +36,7 @@ const Profile = () => {
                         <h1>Get in touch with Retro Blogs!</h1>
                     </div>
                 </div>
-                <div className="col-md-6 d-flex flex-column">
+                <div className="col-md-6 logOut">
                     <h3>{user.name}</h3>
                     <h5>{user.email}</h5>
                     <button className="button" onClick={handleSignOut}>Log Out</button>
