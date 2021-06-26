@@ -14,7 +14,7 @@ const Home = () => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/isAdmin", {
+        fetch("https://polar-retreat-26099.herokuapp.com/isAdmin", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ email: user.email }),
@@ -24,7 +24,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:5000/blogs')
+        fetch('https://polar-retreat-26099.herokuapp.com/blogs')
             .then(res => res.json())
             .then(data => {
                 setBlogs(data);
@@ -33,7 +33,7 @@ const Home = () => {
     }, [])
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`https://polar-retreat-26099.herokuapp.com/delete/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

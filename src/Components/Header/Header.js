@@ -11,7 +11,7 @@ const Header = () => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/isAdmin", {
+        fetch("https://polar-retreat-26099.herokuapp.com/isAdmin", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ email: user.email }),
@@ -49,7 +49,7 @@ const Header = () => {
         formData.append("content", info.content);
         formData.append("date", new Date().toDateString());
 
-        fetch("http://localhost:5000/addABlog", {
+        fetch("https://polar-retreat-26099.herokuapp.com/addABlog", {
             method: "POST",
             body: formData,
         })

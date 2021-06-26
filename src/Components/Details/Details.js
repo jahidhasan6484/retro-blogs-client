@@ -9,7 +9,7 @@ const Details = () => {
 
     const { id } = useParams();
     useEffect(() => {
-        fetch('http://localhost:5000/blogs')
+        fetch('https://polar-retreat-26099.herokuapp.com/blogs')
             .then(res => res.json())
             .then(data => {
                 setDetails(data)

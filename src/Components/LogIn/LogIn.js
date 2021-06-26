@@ -84,9 +84,19 @@ const LogIn = () => {
     }
 
     const userSignIn = () => {
+        storeAuthToken();
         const newInfo = { ...user }
         newInfo.isSignedIn = true;
         setUser(newInfo);
+    }
+
+    const storeAuthToken = () => {
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+            .then(function (idToken) {
+                sessionStorage.setItem('token', idToken);
+            }).catch(function (error) {
+                // Handle error
+            });
     }
 
     return (
